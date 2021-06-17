@@ -47,4 +47,6 @@ public class Ex01Controller {
 		log.info("ex01, sub06 post method");
 	}
 	
+	
+	
 }
