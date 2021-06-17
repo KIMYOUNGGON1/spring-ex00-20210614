@@ -1,5 +1,7 @@
 package org.zerock.controller.lecture;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -80,5 +82,19 @@ public class Ex02Controller {
 		return "ex02";
 	}
 	
+	@RequestMapping("/sub07")
+	public void method07(@RequestParam String[] fav) {
+		log.info("ex02 sub07 method");
+		
+		for(String f : fav) {
+			log.info(f);
+		}
+	}
+	
+	@RequestMapping("/sub08")
+	public void method08(@RequestParam List<String> fav) {
+		log.info("ex02 sub08 method");
+		log.info(fav);
+	}
 	
 }
