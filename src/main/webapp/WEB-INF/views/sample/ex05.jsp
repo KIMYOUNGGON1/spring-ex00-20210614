@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class = "container">
-	<h1>ex06 sub02 view <i class="fas fa-thumbs-up"></i> </h1>
+	<h1>ex05 jsp file</h1>
 </div>
 </body>
 </html>

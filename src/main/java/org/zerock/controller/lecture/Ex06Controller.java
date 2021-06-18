@@ -28,4 +28,20 @@ public class Ex06Controller {
 		
 	}
 	
+	@RequestMapping("/sub03")
+	public String method03() {
+		log.info("ex06, sub03 method");
+		
+		return "forward:/ex06/sub02";
+	}
+	
+	@RequestMapping("/sub04")
+	public String method04() {
+		log.info("ex06, sub04 method");
+		
+		// response.sendRedirect(request.getContextPath() + "/ex06/sub02");
+		
+		return "redirect:/ex06/sub02";
+	}
+	
 }
