@@ -4,6 +4,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.zerock.controller.lecture.domain.User;
 
 import lombok.extern.log4j.Log4j;
@@ -65,23 +66,33 @@ public class Ex08Controller {
 	
 	@RequestMapping("/sub06")
 	public String method06(@ModelAttribute User user, Model model) {
-		log.info("ex08, sub05 method");
+		log.info("ex08, sub06 method");
 		
 		return "ex08/sub02";
 	}
 	
 	@RequestMapping("/sub07")
 	public String method07(User user, Model model) {
-		log.info("ex08, sub05 method");
+		log.info("ex08, sub07 method");
 		
 		return "ex08/sub02";
 	}
 
 	@RequestMapping("/sub08")
 	public String method08(User user) {
-		log.info("ex08, sub05 method");
+		log.info("ex08, sub08 method");
 		
 		return "ex08/sub02";
+	}
+	
+	@RequestMapping("/sub09")
+	public void method09(@ModelAttribute("age") int age, 
+			@ModelAttribute("name") String name) {
+		log.info("ex08, sub09 method");
+		
+		log.info(age);
+		log.info(name);
+	
 	}
 	
 }
