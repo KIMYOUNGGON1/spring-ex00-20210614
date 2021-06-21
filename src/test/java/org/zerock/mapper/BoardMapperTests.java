@@ -1,6 +1,7 @@
 package org.zerock.mapper;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
@@ -34,6 +35,34 @@ public class BoardMapperTests {
 		
 		assertTrue(list.size() > 0);
 		
+	}
+	
+	@Test
+	public void testInsert() {
+		BoardVO board = new BoardVO();
+		board.setTitle("새로 작성하는 글");
+		board.setContent("새로 작성하는 내용");
+		board.setWriter("newbie");
+		
+		int cnt = mapper.insert(board);
+		
+		assertEquals(1, cnt);
+		
+	}
+	
+	@Test
+	public void testInsertSelectKey() {
+		BoardVO board = new BoardVO();
+		board.setTitle("새로 작성하는 글");
+		board.setContent("새로 작성하는 내용");
+		board.setWriter("newbie");
+		
+		assertEquals(0, board.getBno());
+		
+		int cnt = mapper.insertSelectKey(board);
+		
+		assertEquals(1, cnt);
+		assertNotEquals(0, board.getBno());
 	}
 
 }

@@ -6,6 +6,7 @@
 <mapper namespace="org.zerock.mapper.BoardMapper">
 
   <select id="getList" resultType="org.zerock.domain.BoardVO">
+	<![CDATA[
   
   	SELECT 
   		bno bno,
@@ -16,5 +17,18 @@
   		updatedate updatedate
   	 FROM tbl_board
     
+	]]>
   </select>
+  
+  <insert id="insert">
+  	INSERT INTO tbl_board(title, content, writer) 
+  	VALUES (#{title}, #{content}, #{writer})
+  
+  </insert>
+  
+  <insert id="insertSelectKey" useGeneratedKeys="true" keyProperty="bno" keyColumn="bno" >
+  	INSERT INTO tbl_board (title, content, writer)
+  	VALUES (#{title}, #{content}, #{writer})
+  </insert>
+  
 </mapper>

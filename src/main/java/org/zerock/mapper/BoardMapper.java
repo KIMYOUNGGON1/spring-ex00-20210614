@@ -9,4 +9,8 @@ public interface BoardMapper {
 
 //	@Select("SELECT * FROM tbl_board")
 	public List<BoardVO> getList();
+	
+	public int insert(BoardVO board);
+	
+	public int insertSelectKey(BoardVO board);
 }
