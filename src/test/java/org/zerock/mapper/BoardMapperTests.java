@@ -89,6 +89,43 @@ public class BoardMapperTests {
 		assertEquals(key, newBoard.getBno());
 	}
 	
+	@Test
+	public void testDelete() {
+		
+		int cnt = mapper.delete(0);
+		
+		assertEquals(0, cnt);
+		
+		BoardVO board = new BoardVO();
+		board.setTitle("title");
+		board.setContent("content");
+		board.setWriter("writer");
+		
+		mapper.insertSelectKey(board);
+		
+		cnt = mapper.delete(board.getBno());
+		assertEquals(1, cnt);
+	}
+	
+	@Test
+	public void testUpdate() {
+		long bno = 5;
+		
+		BoardVO board = new BoardVO();
+		board.setBno(bno);
+		board.setTitle("new title");
+		board.setContent("new content");
+		board.setWriter("user00");
+		
+		int cnt = mapper.update(board);
+		
+		assertEquals(1, cnt);
+		
+		BoardVO board5 = mapper.read(bno);
+		assertEquals(board.getTitle(), board5.getTitle());
+		assertEquals(board.getContent(), board5.getContent());
+		assertEquals(board.getWriter(), board5.getWriter());
+	}
 }
 
 

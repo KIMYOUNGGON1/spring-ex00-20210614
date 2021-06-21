@@ -15,3 +15,25 @@ INSERT INTO tbl_board (title, content, writer)
 VALUES ('테스트 제목', '테스트 내용', 'user00');
 
 SELECT * FROM tbl_board;
+
+-- 연습
+CREATE TABLE tbl_test1 (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    age INT NOT NULL
+);
+
+INSERT INTO tbl_test1 (name, age) VALUES ('jimin', 22);
+INSERT INTO tbl_test1 (name, age) VALUES ('suga', 33);
+INSERT INTO tbl_test1 (name, age) VALUES ('rm', 11);
+
+
+SELECT * FROM tbl_test1;
+
+-- org.zerock.domain.Test1VO (bean)
+-- org.zerock.mapper.Test1Mapper (interface)
+-- org.zerock.mapper.Test1Mapper.xml (xml)
+-- Test1Tests
+
+
+
