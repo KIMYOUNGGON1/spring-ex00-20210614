@@ -14,7 +14,7 @@
 		
 		 -->
 		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"></property>
-		<property name="jdbcUrl" value="jdbc:log4jdbc:mariadb://13.209.84.120/test"></property>		
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mariadb://13.209.84.120/spr1"></property>		
 		<property name="username" value="root"></property>
 		<property name="password" value="wnddkdwjdqhcjfl1"></property>
 		<property name="maximumPoolSize" value="1"></property>
