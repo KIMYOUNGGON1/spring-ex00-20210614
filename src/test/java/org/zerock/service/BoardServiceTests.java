@@ -48,4 +48,43 @@ public class BoardServiceTests {
 		assertTrue(list.size() > 0);
 	}
 	
+	@Test
+	public void testGet() {
+		BoardVO vo = service.get(1L);
+		
+		assertEquals(1L, vo.getBno());
+	}
+	
+	@Test
+	public void testModify() {
+		BoardVO vo = service.get(1L);
+		vo.setTitle("수정된 제목");
+		vo.setContent("수정된 본문");
+		
+		service.modify(vo);
+		
+		vo = service.get(1L);
+		
+		assertEquals("수정된 제목", vo.getTitle());
+		assertEquals("수정된 본문", vo.getContent());
+	}
+	
+	@Test
+	public void testRemove() {
+		Long key1 = 5L;
+		
+		assertFalse(service.remove(key1));
+		
+		/* 하나 입력 후 삭제 */
+		BoardVO vo = new BoardVO();
+		vo.setTitle("title");
+		vo.setContent("content");
+		vo.setWriter("writer");
+		
+		service.register(vo);
+		
+		assertTrue(service.remove(vo.getBno()));
+	}
+	
+	
 }
