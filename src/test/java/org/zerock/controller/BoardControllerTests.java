@@ -1,6 +1,11 @@
 package org.zerock.controller;
 
 import static org.junit.Assert.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.flash;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.List;
 import java.util.Map;
@@ -18,7 +23,10 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.FlashMap;
 import org.springframework.web.servlet.ModelAndView;
+import org.zerock.domain.BoardVO;
 import org.zerock.mapper.BoardMapperTests;
+
+import com.fasterxml.jackson.databind.deser.impl.CreatorCandidate.Param;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -44,7 +52,7 @@ public class BoardControllerTests {
 	
 	@Test
 	public void testList() throws Exception{
-		ModelAndView mav = mockMvc.perform(MockMvcRequestBuilders.get("/board/list"))
+		ModelAndView mav = mockMvc.perform(get("/board/list"))
 				.andReturn()
 				.getModelAndView();
 				
@@ -62,7 +70,7 @@ public class BoardControllerTests {
 	
 	@Test
 	public void testRegiter() throws Exception {
-		FlashMap fm = mockMvc.perform(MockMvcRequestBuilders.post("/board/register")
+		FlashMap fm = mockMvc.perform(post("/board/register")
 					.param("title", "테스트 새글 제목")
 					.param("content", "테스트 새글 내용")
 					.param("writer", "user00"))
@@ -72,5 +80,37 @@ public class BoardControllerTests {
 		 
 		 
 	}
+	
+	@Test
+	public void testGet() throws Exception {
+		ModelAndView mv = mockMvc.perform(get("/board/get").param("bno", "1"))
+				.andReturn()
+				.getModelAndView();
+		
+		Map<String, Object> model = mv.getModel();
+		
+		BoardVO vo = (BoardVO) model.get("board");
+		assertNotNull(vo);
+		assertEquals(1, vo.getBno());
+		
+	}
+	
+	@Test
+	public void testGet2() throws Exception {
+		mockMvc.perform(get("/board/get").param("bno", "1"))
+		       .andExpect(status().isOk())
+		       .andExpect(model().attributeExists("board"));
+	}
 
+	
+	@Test
+	public void testModify() throws Exception {
+			mockMvc.perform(post("/board/modify")
+					.param("bno", "1")
+					.param("title", "수정된 테스트 새글 제목")
+					.param("content", "수정된 테스트 새글 내용")
+					.param("writer", "user00"))
+			.andExpect(status().is3xxRedirection())
+			.andExpect(flash().attribute("result", "success"));
+	}
 }
