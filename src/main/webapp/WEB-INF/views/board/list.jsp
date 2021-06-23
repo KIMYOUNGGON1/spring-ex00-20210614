@@ -1,8 +1,8 @@
 <%@ page  contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
-
+<%@ taglib prefix="fmt"  uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="bd" tagdir="/WEB-INF/tags/board" %>
 
 <!DOCTYPE html>
 <html>
@@ -13,7 +13,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<bd:navbar />
 <div class = "container">
+	
 	
 	<h1>글 목록</h1>
 	<table class="table table-striped">
@@ -32,8 +34,12 @@
 					<td>${board.bno }</td>
 					<td>${board.title }</td>
 					<td>${board.writer }</td>
-					<td>${board.regdate }</td>
-					<td>${board.updateDate }</td>
+					<td>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }"/>
+					</td>
+					<td>
+						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate }"/>
+					</td>
 				</tr>
 			</c:forEach>
 		</tbody>
