@@ -32,7 +32,11 @@
 			<c:forEach items="${list }" var="board">
 				<tr>
 					<td>${board.bno }</td>
-					<td>${board.title }</td>
+					<td>
+					<a href="${appRoot }/board/get?bno=${board.bno}">
+					${board.title }
+					</a> 
+					</td>					
 					<td>${board.writer }</td>
 					<td>
 						<fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate }"/>
@@ -45,5 +49,35 @@
 		</tbody>
 	</table>
 </div>
+
+<c:if test="${not empty result }" >
+<script>
+$(document).ready(function() {
+	$("#board-modal1").modal('show');
+});
+</script>
+
+<div id="board-modal1" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">등록 성공</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>게시글 ${result}번이 등록되었습니다.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+</c:if>
+
 </body>
 </html>
