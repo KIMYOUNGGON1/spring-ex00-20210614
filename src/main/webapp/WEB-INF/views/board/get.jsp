@@ -32,7 +32,9 @@
 				<div class="form-group">
 					<label for="input2">작성자</label>
 					<input readonly="readonly" id="input2" class="form-control" name="writer" value="${board.writer }">
-				</div>				
+				</div>
+				
+				<a class="btn btn-secondary" href="${appRoot }/board/modify?bno=${board.bno}">수정, 삭제</a>				
 			</form>
 		</div>
 	</div>
