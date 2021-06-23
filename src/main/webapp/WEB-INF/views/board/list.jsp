@@ -53,7 +53,17 @@
 <c:if test="${not empty result }" >
 <script>
 $(document).ready(function() {
-	$("#board-modal1").modal('show');
+	
+	if(history.state == null) {
+		console.log("어서와 처음이지.");	
+		
+		$("#board-modal1").modal('show');
+		history.replaceState({}, null);
+
+	} else {
+		
+		console.log("너 전에 왔었어.");	
+	}
 });
 </script>
 
@@ -61,13 +71,13 @@ $(document).ready(function() {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">등록 성공</h5>
+        <h5 class="modal-title">${messageTitle }</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <p>게시글 ${result}번이 등록되었습니다.</p>
+        <p>${messageBody }</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
