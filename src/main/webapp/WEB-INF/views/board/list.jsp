@@ -53,7 +53,14 @@
 				<tr>
 					<td>${board.bno }</td>
 					<td>
-					<a href="${appRoot }/board/get?bno=${board.bno}">
+					
+					<c:url value="/board/get" var="getUrl">
+						<c:param name="bno" value="${board.bno }" />
+						<c:param name="pageNum" value="${pageMaker.cri.pageNum }" />
+						<c:param name="amount" value="${pageMaker.cri.amount }" />
+					</c:url>
+					
+					<a href="${getUrl}">
 					${board.title }
 					</a> 
 					</td>					
@@ -78,7 +85,7 @@
     
     <c:if test="${pageMaker.prev }">
     	<li class="page-item">
-      		<a class="page-link" href="#">Previous</a>
+      		<a class="page-link" href="${pageMaker.startPage - 1 }">Previous</a>
     	</li>
     </c:if>
 
@@ -89,7 +96,7 @@
 
 	<c:if test="${pageMaker.next }">
     	<li class="page-item">
-      		<a class="page-link" href="#">Next</a>
+      		<a class="page-link" href="${pageMaker.endPage + 1 }">Next</a>
     	</li>
 	</c:if>
   </ul>
