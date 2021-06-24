@@ -27,9 +27,9 @@ public class BoardController {
 	private BoardService service;
 	
 	@GetMapping("/list")
-	public void list(Criteria cri, Model model) {
+	public void list(@ModelAttribute("cri") Criteria cri, Model model) {
 		log.info("board/list method....");
-		int total = 123; // TODO: 나중에 구하는 코드 작성해야 함.
+		int total = service.getTotal(cri);
 		
 		// service getList() 실행 결과를
 		List<BoardVO> list =  service.getList(cri);
@@ -73,7 +73,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		//request parameter 수집
 		
 		//service 일 시킴
@@ -84,12 +84,15 @@ public class BoardController {
 			rttr.addFlashAttribute("messageTitle", "수정 성공");
 			rttr.addFlashAttribute("messageBody", "수정 되었습니다.");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		// forward of redirect
 		return "redirect:/board/list";
 	}
 	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 		//parameter 수집
 		
 		//service 일 시킴
@@ -100,6 +103,9 @@ public class BoardController {
 			rttr.addFlashAttribute("messageTitle", "삭제 성공");
 			rttr.addFlashAttribute("messageBody", "삭제 되었습니다.");
 		}
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
 		//forward or redirect
 		return "redirect:/board/list";
 	}
