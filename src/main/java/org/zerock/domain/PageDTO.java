@@ -18,6 +18,8 @@ public class PageDTO {
 	private int total; //총 게시물 수
 
 	public PageDTO(Criteria cri, int total) {
+		this.cri = cri;
+		
 		int current = cri.getPageNum();
 		int numPerPage = cri.getAmount();
 		
@@ -41,7 +43,7 @@ public class PageDTO {
 		
 		//이전, 다음 버튼 표시 여부
 		this.prev = this.startPage > 1;
-		this.next = this.endPage <realEnd;
+		this.next = this.endPage < realEnd;
 	}
 	
 }

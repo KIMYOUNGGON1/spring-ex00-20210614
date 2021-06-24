@@ -11,6 +11,26 @@
 <%@ include file = "/WEB-INF/subModuels/bootstrapHeader.jsp" %>
 
 <title>Insert title here</title>
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#list-pagenation1 a").click(function(e) {
+			// 기본 액션 중지 (hyperlink 역할 안함)
+			e.preventDefault();
+			
+			console.log("a요소 클릭됨");
+			
+			var actionForm = $("#actionForm");
+			
+			//form의 pageNum input의 값을 a 요소의 href값으로 변경
+			actionForm.find("[name=pageNum]").val($(this).attr("href"));
+		
+			//submit
+			actionForm.submit();
+		})
+	})
+</script>
+
 </head>
 <body>
 	<bd:navbar />
@@ -54,25 +74,33 @@
 <div>
 
 <nav aria-label="Page navigation example">
-  <ul class="pagination justify-content-center">
-    <li class="page-item disabled">
-      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-    </li>
-    <li class="page-item"><a class="page-link" href="#">1</a></li>
-    <li class="page-item"><a class="page-link" href="#">2</a></li>
-    <li class="page-item"><a class="page-link" href="#">3</a></li>
-    <li class="page-item"><a class="page-link" href="#">4</a></li>
-    <li class="page-item"><a class="page-link" href="#">5</a></li>
-    <li class="page-item"><a class="page-link" href="#">6</a></li>
-    <li class="page-item"><a class="page-link" href="#">7</a></li>
-    <li class="page-item"><a class="page-link" href="#">8</a></li>
-    <li class="page-item"><a class="page-link" href="#">9</a></li>
-    <li class="page-item"><a class="page-link" href="#">10</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#">Next</a>
-    </li>
+  <ul id="list-pagenation1" class="pagination justify-content-center">
+    
+    <c:if test="${pageMaker.prev }">
+    	<li class="page-item">
+      		<a class="page-link" href="#">Previous</a>
+    	</li>
+    </c:if>
+
+	<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
+     <li class="page-item"><a class="page-link" 
+     href="${num }">${num }</a></li>	
+	</c:forEach>
+
+	<c:if test="${pageMaker.next }">
+    	<li class="page-item">
+      		<a class="page-link" href="#">Next</a>
+    	</li>
+	</c:if>
   </ul>
 </nav>
+
+<div style="display:none;">
+	<form id="actionForm" action="${appRoot }/board/list" method="get">
+		<input name="pageNum" value="${pageMaker.cri.pageNum }" />
+		<input name="amount" value="${pageMaker.cri.amount }" />
+	</form>
+</div>
 
 </div>
 
