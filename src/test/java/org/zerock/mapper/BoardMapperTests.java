@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -67,10 +68,10 @@ public class BoardMapperTests {
 
 	@Test
 	public void testRead() {
-		BoardVO vo = mapper.read(1);
+		BoardVO vo = mapper.read(2);
 		
 		assertNotNull(vo);
-		assertEquals(1, vo.getBno());
+		assertEquals(2, vo.getBno());
 		
 		/*insert, 자동 증가 키값 확인 */
 		BoardVO board = new BoardVO();
@@ -109,7 +110,7 @@ public class BoardMapperTests {
 	
 	@Test
 	public void testUpdate() {
-		long bno = 5;
+		long bno = 4;
 		
 		BoardVO board = new BoardVO();
 		board.setBno(bno);
@@ -126,6 +127,15 @@ public class BoardMapperTests {
 		assertEquals(board.getContent(), board5.getContent());
 		assertEquals(board.getWriter(), board5.getWriter());
 	}
+	
+	@Test
+	public void testPaging() {
+		Criteria cri = new Criteria();
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		
+		assertEquals(10, list.size());
+	}
+	
 }
 
 
