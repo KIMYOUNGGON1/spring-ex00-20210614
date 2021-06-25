@@ -29,7 +29,13 @@ public class Criteria {
 	}
 	
 	public String[] getTypeArr() {
-		type.split("");
+		
+		if(type == null) {
+			return new String[] {};
+		} else {
+			String[] types = type.split("");
+			return types;			
+		}
 	}
 	
 }
