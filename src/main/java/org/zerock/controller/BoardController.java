@@ -41,7 +41,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(BoardVO board, RedirectAttributes rttr) {
+	public String register(BoardVO board, Criteria cri, RedirectAttributes rttr) {
 		
 		// service에게 등록업무 시키고
 		service.register(board); // title, content, writer property
@@ -50,6 +50,11 @@ public class BoardController {
 		rttr.addFlashAttribute("result", board.getBno());
 		rttr.addFlashAttribute("messageTitle", "등록 성공");
 		rttr.addFlashAttribute("messageBody", board.getBno() + "번 게시물 등록 되었습니다.");
+		
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
 		
 		// /board/list 경로로 redirect
 		return "redirect:/board/list";
@@ -87,6 +92,9 @@ public class BoardController {
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
 		// forward of redirect
 		return "redirect:/board/list";
 	}
@@ -106,6 +114,9 @@ public class BoardController {
 		
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
+		rttr.addAttribute("type", cri.getType());
+		rttr.addAttribute("keyword", cri.getKeyword());
+		
 		//forward or redirect
 		return "redirect:/board/list";
 	}

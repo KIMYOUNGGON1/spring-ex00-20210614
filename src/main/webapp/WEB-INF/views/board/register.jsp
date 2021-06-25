@@ -34,6 +34,12 @@
 					<input id="input2" class="form-control" name="writer">
 				</div>				
 				<input class="btn btn-primary" type="submit" value="작성" />
+				
+				<input hidden name="pageNum" value="${cri.pageNum }" />	
+				<input hidden name = "amount" value="${cri.amount }" />			
+				<input hidden name="type" value="${cri.type }">
+				<input hidden name="keyword" value="${cri.keyword }" />
+				
 			</form>
 		</div>
 	</div>

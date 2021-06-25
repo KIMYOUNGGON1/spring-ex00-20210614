@@ -58,6 +58,8 @@
 						<c:param name="bno" value="${board.bno }" />
 						<c:param name="pageNum" value="${pageMaker.cri.pageNum }" />
 						<c:param name="amount" value="${pageMaker.cri.amount }" />
+						<c:param name="type" value="${pageMaker.cri.type }" />
+						<c:param name="keyword" value="${pageMaker.cri.keyword }"/>
 					</c:url>
 					
 					<a href="${getUrl}">
@@ -90,7 +92,7 @@
     </c:if>
 
 	<c:forEach begin="${pageMaker.startPage }" end="${pageMaker.endPage }" var="num">
-     <li class="page-item"><a class="page-link" 
+     <li class="page-item ${num == cri.pageNum ? 'active' : '' }"><a class="page-link" 
      href="${num }">${num }</a></li>	
 	</c:forEach>
 
