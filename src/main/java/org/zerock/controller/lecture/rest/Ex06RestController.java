@@ -1,5 +1,9 @@
 package org.zerock.controller.lecture.rest;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,4 +32,12 @@ public class Ex06RestController {
 		
 		return new ResponseEntity<String>(HttpStatus.BAD_REQUEST);
 	}
+	
+	@RequestMapping("/sub05")
+	public String method05(HttpServletRequest requset) {
+		log.info(requset.getMethod());
+		
+		return "hello";
+	}
+	
 }
