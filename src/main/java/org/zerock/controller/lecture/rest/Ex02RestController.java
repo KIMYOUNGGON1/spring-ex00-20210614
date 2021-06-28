@@ -1,7 +1,9 @@
 package org.zerock.controller.lecture.rest;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,4 +57,32 @@ public class Ex02RestController {
 		return list;
 	}
 	
+	@RequestMapping("/sub05")
+	public String[] method05() {
+		return new String[] {"java", "script", "object", "notation"};
+	}
+	
+	@RequestMapping("/sub06")
+	public Map<String, String> method06() {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("k1", "v1");
+		map.put("k2", "v2");
+		map.put("k3", "v3");
+		
+		return map;
+	}
+	
+	@RequestMapping("/sub07")
+	public Map<String, User> method07() {
+		Map<String, User> map = new HashMap<String, User>();
+		
+		User user = new User();
+		user.setName("korea");
+		user.setAge(99);
+		map.put("u1", user);
+		map.put("u2", user);
+		map.put("u3", user);
+		
+		return map;
+	}
 }
