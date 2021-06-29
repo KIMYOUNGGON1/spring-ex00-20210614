@@ -44,11 +44,12 @@
 			});
 		});
 		$("#btn3").click(function(){
-			$.post("{appRoot}/rest09/sub01", 
-					[id: "jeju", age : 3000],
-					[function(data) {console.log("btn3", data)}],
-					"json");
-		})
+			$.post("${appRoot}/rest09/sub01", {id:"jeju", age:3000},
+					function(d) {
+					console.log("btn3",d);
+				}, "json"
+			);
+		});
 	})
 	</script>
 	
