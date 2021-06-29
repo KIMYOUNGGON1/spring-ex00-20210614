@@ -35,6 +35,27 @@ $(function() {
 			}
 		});
 	});
+	
+	//button2
+	$("#button2").click(function() {
+		$.get({
+			url : "${appRoot}/rest10/list",
+			success : function(list) {
+				console.log(list);	
+				var table1body = $("#table1 tbody");
+				table1body.empty();
+				
+				for (var i = 0; i < list.length; i++) {
+					var tr = $(generateTableRow(list[i]));
+					table1body.append(tr);
+				}
+			}
+		});
+	});
+	
+	function generateTableRow(data) {
+		return "<tr><td>" + data.id +"</td><td>" + data.age +"</td></tr>"
+	}
 })
 </script>
 </head>
@@ -47,6 +68,22 @@ $(function() {
 			<input id="submit" type="submit" value="전송">			
 			--> 
 			<button id="submit">전송</button>
+			
+			<hr>
+			
+			<button id="button2">목록보기</button>
+			
+			<table class="table" id="table1">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>AGE</th>
+					</tr>
+				</thead>
+				<tbody>
+				
+				</tbody>
+			</table>
 	</div>
 </body>
 </html>
