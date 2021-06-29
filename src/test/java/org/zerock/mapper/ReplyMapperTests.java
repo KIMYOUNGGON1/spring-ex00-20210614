@@ -37,5 +37,33 @@ public class ReplyMapperTests {
 		
 		assertEquals("댓글!!!", vo.getReply());
 	}
+	
+	@Test
+	public void testDelete() {
+		ReplyVO vo = new ReplyVO();
+		vo.setBno(71L);
+		vo.setReply("댓글~~");
+		vo.setReplyer("user00");
+		
+		mapper.insertSelectKey(vo);
+		
+		int cnt = mapper.delete(vo.getRno());
+		
+		assertEquals(1, cnt);
+	}
+	
+	@Test
+	public void testUpdate() {
+		ReplyVO vo = mapper.read(1L);
+		
+		String re = "수정된 댓글";
+		
+		vo.setReply(re);
+		
+		assertEquals(1, mapper.update(vo));
+		
+		vo = mapper.read(1L);
+		assertEquals(re, vo.getReply());
+	}
 
 }
