@@ -66,4 +66,15 @@ public class ReplyController {
 		}
 	}
 	
+	@RequestMapping(value = "/{rno}", method = RequestMethod.PUT)
+	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable Long rno) {
+		int cnt = service.modify(vo);
+		
+		if (cnt == 1) {
+			return new ResponseEntity<String> ("success", HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
 }
