@@ -59,9 +59,67 @@
 			});
 		})
 	</script>
-
+	<h5>입력 테스트</h5>
 	<button id="btn1">TEST CREATE - success</button>
 	<button id="btn2">TEST CREATE - fail</button>
+	
+	<hr>
+	<script type="text/javascript">
+	$(function(){
+		$("#btn3").click(function() {
+			var bno = 71;
+			
+			$.get({
+				url : "${appRoot}/replies/pages/" + bno,
+				success : function(data) {
+					console.log(data);
+				}
+			})
+		})
+		
+	})</script>
+	<h5>목록 테스트</h5>
+	<button id="btn3">TEST LIST</button>
+	
+	<hr>
+	
+	<script type="text/javascript">
+	$(function() {
+		$("#btn4").click(function() {
+			var rno = 1;
+			
+			$.get({
+				url: "${appRoot}/replies/" + rno,
+				success: function(data) {
+					console.log(data);
+				}
+			});
+		})
+	})
+	</script>
+	<h5>댓글 하나</h5>
+	<button id="btn4">TEST GET</button>
+	
+	<hr>
+	<script type="text/javascript">
+	$(function(){
+		$("#btn5").click(function(){
+			var rno = 6;
+			$.ajax({
+				type:"delete",
+				url: "${appRoot}/replies/" + rno,
+				success : function() {
+					console.log("delete success");
+				},
+				error: function() {
+					console.log("delete fail");
+				}
+			})
+		})
+	})
+	</script>
+	<h5>댓글 삭제</h5>
+	<button id="btn5">TEST DELETE</button>
 </div>
 </body>
 </html>
