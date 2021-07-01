@@ -19,6 +19,7 @@ $(function() {
 			type: "get",
 			url: "${appRoot}/replies/" + rno,
 			success: function (reply) {
+				$("#reply-rno-input2").val(reply.rno);
 				$("#reply-replyer-input2").val(reply.replyer);
 				$("#reply-reply-textarea2").text(reply.reply);
 				$("#reply-modify-modal").modal("show");
@@ -95,6 +96,78 @@ $(function() {
 			}
 		});
 	});
+	
+	/* 수정 submit 버튼 클릭시 */
+	$("#reply-modify-btn1").click(function() {
+		var rno = $("#reply-rno-input2").val();
+		var bno = $("#reply-bno-input2").val();
+		var reply = $("#reply-reply-textarea2").val();
+		var replyer = $("#reply-replyer-input2").val();
+		
+		var data = {
+			rno : rno,
+			bno : bno,
+			reply: reply,
+			replyer: replyer
+		}
+		
+		$.ajax({
+			type: "put",
+			url: "${appRoot}/replies/" + rno,
+			data: JSON.stringify(data),
+			contentType : "application/json",
+			success: function() {
+				console.log("수정 성공");
+				// 모달창 닫고
+				$("#reply-modify-modal").modal("hide");
+				// 댓글리스트 가져오고
+				getReplyList();
+				
+				// 안내 메세지 보여주기
+				$("#alert1").text("댓글 수정하였습니다.").addClass("show");
+			},
+			error: function() {
+				console.log("수정 실패");
+			}
+		})
+	});
+	
+	/*삭제 버튼 클릭시 */
+	$("#reply-delete-btn1").click(function(){
+		var check = confirm("삭제 하시겠습니까?")
+	
+		if(check) {
+			var rno = $("#reply-rno-input2").val();
+			var bno = $("#reply-bno-input2").val();
+			var reply = $("#reply-reply-textarea2").val();
+			var replyer = $("#reply-replyer-input2").val();
+			
+			var data = {
+					rno : rno,
+					bno : bno,
+					reply: reply,
+					replyer: replyer
+				}
+			
+			$.ajax({
+				type : "delete",
+				url: "${appRoot}/replies/" + rno,
+				success: function() {
+					console.log("삭제 성공");
+					// 모달창 닫고
+					$("#reply-modify-modal").modal("hide");
+					// 댓글리스트 가져오고
+					getReplyList();
+					
+					// 안내 메세지 보여주기
+					$("#alert1").text("댓글 삭제하였습니다.").addClass("show");
+				},
+				error: function() {
+					console.log("삭제 실패");
+				}
+			})
+		}
+	})
 })
 
 </script>
@@ -200,10 +273,11 @@ $(function() {
       </div>
       <div class="modal-body">
         <form>
+          <input type="text" value="" readonly hidden id="reply-rno-input2" >
           <input type="text" value="${board.bno }" readonly hidden id="reply-bno-input2">
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">작성자</label>
-            <input type="text" class="form-control" id="reply-replyer-input2">
+            <input type="text" class="form-control" id="reply-replyer-input2" readonly>
           </div>
           <div class="form-group">
             <label for="message-text" class="col-form-label">댓글</label>
@@ -214,6 +288,7 @@ $(function() {
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button id="reply-modify-btn1" type="button" class="btn btn-primary">댓글 수정</button>
+        <button id="reply-delete-btn1" type="button" class="btn btn-danger">댓글 삭제</button>
       </div>
     </div>
   </div>
