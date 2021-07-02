@@ -20,6 +20,8 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class Ex01UploadController {
 	
+	//https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/home.html
+	
 	@RequestMapping("/sub01")
 	public void method01(String fname, MultipartFile ufile) {
 		log.info(fname);
