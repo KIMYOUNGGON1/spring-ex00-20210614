@@ -11,3 +11,8 @@ CREATE TABLE tbl_board_file (
 DESC tbl_board_file;
 
 SELECT * FROM tbl_board_file;
+
+    DELETE FROM tbl_board_file;
+    
+    ALTER TABLE tbl_board_file
+    ADD FOREIGN KEY (bno) REFERENCES tbl_board(bno);

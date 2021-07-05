@@ -1,10 +1,9 @@
 package org.zerock.service;
 
-import java.beans.Transient;
 import java.io.InputStream;
 import java.util.List;
 
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,20 +14,40 @@ import org.zerock.mapper.BoardMapper;
 import org.zerock.mapper.FileMapper;
 import org.zerock.mapper.ReplyMapper;
 
-import lombok.AllArgsConstructor;
+import lombok.Setter;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.ObjectCannedACL;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
-@AllArgsConstructor
+//@AllArgsConstructor
 @Service
 public class BoardServieImpl implements BoardService{
-
+	private String bucketName;
+	private String profileName;
+	private S3Client s3;
+	
+	@Setter (onMethod_ = @Autowired)
 	private BoardMapper mapper;
+	
+	@Setter (onMethod_ = @Autowired)
 	private ReplyMapper replyMapper;
+	
+	@Setter (onMethod_ = @Autowired)
 	private FileMapper fileMapper;
+	
+	
+	public BoardServieImpl() {
+		this.bucketName = "choongang-kyg";
+		this.profileName = "spring1";
+		this.s3 = S3Client.builder()
+				.credentialsProvider(ProfileCredentialsProvider.create(profileName))
+				.build();
+	}
+	
+	
 	
 	@Override
 	public void register(BoardVO board) {
@@ -55,17 +74,9 @@ public class BoardServieImpl implements BoardService{
 
 	private void upload(BoardVO board, MultipartFile file){
 		
-		try(InputStream is = file.getInputStream()) {
-			
-		String buckeyName = "choongang-kyg";
-		String profileName = "spring1";
-		S3Client s3 = S3Client.builder()
-				.credentialsProvider(ProfileCredentialsProvider.create(profileName))
-				.build();
-		
-		
+		try(InputStream is = file.getInputStream()) {		
 		PutObjectRequest objectRequeset = PutObjectRequest.builder()
-				.bucket(buckeyName)
+				.bucket(bucketName)
 				.key(board.getBno() + "/" + file.getOriginalFilename())
 				.contentType(file.getContentType())
 				.acl(ObjectCannedACL.PUBLIC_READ)
@@ -94,10 +105,33 @@ public class BoardServieImpl implements BoardService{
 		//댓글 삭제
 		replyMapper.deleteByBno(bno);
 		
+		//파일 삭제(s3)
+		BoardVO vo = mapper.read(bno);
+		removeFile(vo);
+
+		//파일 삭제 (db)
+		fileMapper.deleteByBno(bno);
+		
+		
 		//게시물 삭제
 		int cnt = mapper.delete(bno);
 		
 		return cnt == 1;
+	}
+
+	private void removeFile(BoardVO vo) {
+		//String buckeyName = "";
+		String key =  vo.getBno() + "/" + vo.getFileName();
+		
+		DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key(key)
+				.build();
+		
+		s3.deleteObject(deleteObjectRequest);
+		
+		
+		
 	}
 
 	@Override
