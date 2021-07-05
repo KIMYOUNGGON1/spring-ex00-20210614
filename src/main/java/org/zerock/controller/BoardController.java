@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
@@ -41,22 +42,20 @@ public class BoardController {
 	}
 	
 	@PostMapping("/register")
-	public String register(BoardVO board, Criteria cri, RedirectAttributes rttr) {
+	public String register(BoardVO board, 
+			@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
+		
+		board.setFileName(file.getOriginalFilename());
 		
 		// service에게 등록업무 시키고
-		service.register(board); // title, content, writer property
+		service.register(board, file); // title, content, writer
 		
-		// redirect 목적지로 정보 전달
+		// redirect목적지로 정보 전달
 		rttr.addFlashAttribute("result", board.getBno());
 		rttr.addFlashAttribute("messageTitle", "등록 성공");
 		rttr.addFlashAttribute("messageBody", board.getBno() + "번 게시물 등록 되었습니다.");
 		
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-		rttr.addAttribute("type", cri.getType());
-		rttr.addAttribute("keyword", cri.getKeyword());
-		
-		// /board/list 경로로 redirect
+		// /board/list redirect
 		return "redirect:/board/list";
 	}
 	
