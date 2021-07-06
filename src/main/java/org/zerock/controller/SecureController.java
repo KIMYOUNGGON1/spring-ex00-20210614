@@ -12,7 +12,7 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class SecureController {
 	
-	@GetMapping("/all")
+	@GetMapping(value = "/all", produces = "text/plain;charset=utf-8")
 	@ResponseBody
 	public String doAll() {
 		
@@ -20,11 +20,19 @@ public class SecureController {
 		return "모두 접근 가능 경로";
 	}
 	
-	@GetMapping("/member")
+	@GetMapping(value = "/member", produces = "text/plain;charset=utf-8")
 	@ResponseBody
 	public String doMember() {
 		log.info("secure member method");
 		
 		return "멤버만 접근 가능 경로";
+	}
+	
+	@GetMapping(value = "/admin", produces = "text/plain;charset=utf-8")
+	@ResponseBody
+	public String doAdmin() {
+		log.info("secure admin method");
+		
+		return "어드민만 접근 가능 경로";
 	}
 }
