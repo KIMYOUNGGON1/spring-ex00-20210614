@@ -78,7 +78,8 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("principal.username == #board.writer") //720쪽
+	//@PreAuthorize("authication.name == #board.writer") //spring.io
 	public String modify(BoardVO board, Criteria cri, 
 			@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		//request parameter 수집
@@ -102,8 +103,9 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove")
-	@PreAuthorize("isAuthenticated()")
-	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
+	@PreAuthorize("principal.username == #writer") // 720 쪽
+	public String remove(@RequestParam("bno") Long bno, 
+			Criteria cri, RedirectAttributes rttr, String writer) {
 		//parameter 수집
 		
 		//service 일 시킴
