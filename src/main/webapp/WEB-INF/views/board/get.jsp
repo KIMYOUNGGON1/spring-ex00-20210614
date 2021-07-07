@@ -79,8 +79,8 @@ var boardBno = "${board.bno}"
 			<h3>댓글 </h3>
 			<sec:authorize access="isAuthenticated()">
 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reply-insert-modal">댓글 작성</button>
-			<ul class="list-unstyled" id="reply-list-container">
 			</sec:authorize>
+			<ul class="list-unstyled" id="reply-list-container">
 			</ul>
 		</div>
 	</div>
