@@ -78,6 +78,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/modify")
+	@PreAuthorize("isAuthenticated()")
 	public String modify(BoardVO board, Criteria cri, 
 			@RequestParam("file") MultipartFile file, RedirectAttributes rttr) {
 		//request parameter 수집
@@ -101,6 +102,7 @@ public class BoardController {
 	}
 	
 	@PostMapping("/remove")
+	@PreAuthorize("isAuthenticated()")
 	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
 		//parameter 수집
 		
