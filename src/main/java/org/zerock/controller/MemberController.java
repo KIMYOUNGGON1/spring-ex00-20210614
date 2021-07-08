@@ -1,7 +1,11 @@
 package org.zerock.controller;
 
+import java.security.Principal;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,4 +47,14 @@ public class MemberController {
 			return "redirect:/board/signup?error";
 		}
 	}
+	
+	@GetMapping("/info")
+	@PreAuthorize("isAuthenticated()")
+	public void info(Criteria cri, Principal principal, Model model) {
+		log.info(principal.getName());
+		
+		MemberVO member = service.read(principal.getName());
+		
+		model.addAttribute("member", member);
+	} 
 }
