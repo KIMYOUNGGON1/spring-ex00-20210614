@@ -21,6 +21,17 @@
 	</c:if>
 </c:url>
 
+<c:url value="/member/signup" var="signUpUrl">
+	<c:if test="${not empty cri.pageNum }">
+		<c:param name="pageNum" value="${cri.pageNum }"></c:param>
+	</c:if>
+	<c:if test="${not empty cri.amount }">
+		<c:param name="amount" value="${cri.amount }"></c:param>
+	</c:if>
+		<c:param name="keyword" value="${cri.keyword }"></c:param>
+		<c:param name="type" value="${cri.type }"></c:param>
+</c:url>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <a class="navbar-brand" href="${appRoot }/board/list">스프링 게시판</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,6 +59,14 @@
       <li class="nav-item">
         <a class="nav-link" href="${appRoot }/secure/admin">어드민만</a>
       </li>
+      
+      <sec:authorize access="!isAuthenticated()">
+      	<li class="nav-item">
+      		<a class="nav-link" href="${singUpUrl }">회원가입</a>
+      	</li>
+      </sec:authorize>
+      
+      
     </ul>
   </div>
 	
