@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Select;
 import org.zerock.domain.BoardVO;
 
 import org.zerock.domain.Criteria;
+import org.zerock.domain.MemberVO;
 
 public interface BoardMapper {
 
@@ -25,4 +26,6 @@ public interface BoardMapper {
 	public int update(BoardVO board);
 	
 	public int getTotalCount(Criteria cri);
+
+	public void removeByUserid(MemberVO vo);
 }

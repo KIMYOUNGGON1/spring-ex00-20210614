@@ -3,6 +3,7 @@ package org.zerock.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.zerock.domain.MemberVO;
 import org.zerock.domain.ReplyVO;
 
 public interface ReplyMapper {
@@ -22,4 +23,6 @@ public interface ReplyMapper {
 	public int getCountByBno(Long bno);
 	
 	public int deleteByBno(Long bno);
+
+	public void removebyUserid(MemberVO vo);
 }
