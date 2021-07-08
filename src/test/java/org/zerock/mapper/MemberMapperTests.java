@@ -2,6 +2,8 @@ package org.zerock.mapper;
 
 import static org.junit.Assert.*;
 
+import java.lang.reflect.Member;
+
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -84,4 +86,16 @@ public class MemberMapperTests {
 		assertEquals("어드민", vo.getUserName());
 		assertTrue(encoder.matches("admin", vo.getUserpw()));
 	}
+	
+	
+	@Test
+	public void testUpdate() {
+		MemberVO vo = mapper.read("newid2");
+		
+		String newpw = "111";
+		vo.setUserpw(encoder.encode(newpw));
+		
+		assertEquals(1, mapper.update(vo));
+	}
+	
 }
