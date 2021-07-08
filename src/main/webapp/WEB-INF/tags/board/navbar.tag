@@ -50,6 +50,7 @@
       	</li>
       </sec:authorize>
       
+      <%--
       <li class="nav-item">
         <a class="nav-link" href="${appRoot}/secure/all">모두</a>
       </li>
@@ -59,16 +60,21 @@
       <li class="nav-item">
         <a class="nav-link" href="${appRoot }/secure/admin">어드민만</a>
       </li>
+       --%>
       
       <sec:authorize access="!isAuthenticated()">
       	<li class="nav-item">
-      		<a class="nav-link" href="${singUpUrl }">회원가입</a>
+      		<a class="nav-link" href="${signUpUrl }">회원가입</a>
       	</li>
       </sec:authorize>
       
       
     </ul>
   </div>
+	
+	<sec:authorize access="!isAuthenticated()">
+		<a href="${appRoot }/member/login" class="btn btn-outline-primary">로그인</a>
+	</sec:authorize>
 	
 	<sec:authorize access="isAuthenticated()">
 		<form action="${appRoot }/logout" method="post">
