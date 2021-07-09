@@ -21,6 +21,40 @@ $(function() {
 			.submit();
 		}
 	});
+	
+	// 패스워드 확인
+	$("#member-info-input2, #member-info-input4").keyup(function(){
+		var pw1 = $("#member-info-input2").val();
+		var pw2 = $("#member-info-input4").val();
+		var modifyBtn = $("#member-info-modify-btn1");
+		
+		if ((pw1 != pw2)) {
+			modifyBtn.attr("disabled", "disabled");
+			$("#member-info-password-message").text("패스워드가 일치하지 않습니다.");
+		} else {
+			if (pw1 == "") {
+				modifyBtn.attr("disabled", "disabled");	
+				$("#member-info-password-message").text("패스워드를 입력해주세요.");
+			} else {
+				modifyBtn.removeAttr("disabled");
+				$("#member-info-password-message").empty();
+			}
+		}
+	});
+	
+	// 패스워드 보이기 안보이기 토글
+	$("#toggle-password-btn").click(function() {
+		var inputElem = $("#member-info-input2")
+		
+		if (inputElem.attr("type") == "password") {
+			inputElem.attr("type", "text");
+			$("#toggle-password-icon").removeClass("fa-eye").addClass("fa-eye-slash");
+		} else {
+			inputElem.attr("type", "password");
+			$("#toggle-password-icon").removeClass("fa-eye-slash").addClass("fa-eye");
+		}
+	});
+	
 });
 </script>
 
@@ -50,14 +84,31 @@ $(function() {
 					<input readonly value="${member.userid }" type="text" class="form-control" id="member-info-input1" name="userid">
 				</div>
 				<div class="form-group">
-					<label for="member-info-input2">패스워드</label>
-					<input type="password" class="form-control" id="member-info-input2" name="userpw">
+					<label for="member-info-input2">새 패스워드</label>
+					 
+					 <div class="input-group">
+					 	<input type="password" class="form-control" id="member-info-input2" name="userpw">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary"
+							        type="button"
+							        id="toggle-password-btn">
+							        
+							        <i id="toggle-password-icon" class="far fa-eye"></i>
+							        
+							        </button> 
+						</div>
+					 </div>
 				</div>
 				<div class="form-group">
+				<div class="form-group">
+					<label for="member-info-input4">새 패스워드 확인</label>
+					<input type="password" class="form-control" id="member-info-input4">
+					<small id="member-info-password-message" class="form-text text-danger"></small>
+				</div>
 					<label for="member-info-input3">이름</label>
 					<input value="${member.userName }" type="text" class="form-control" id="member-info-input3" name="userName">
 				</div>
-				<button type="submit" class="btn btn-secondary" id="member-info-modify-btn1">정보 수정</button>
+				<button disabled type="submit" class="btn btn-secondary" id="member-info-modify-btn1">정보 수정</button>
 				<button type="button" class="btn btn-danger" id="member-info-remove-btn1">회원 탈퇴</button>
 			</form>
 		</div>
