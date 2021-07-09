@@ -70,6 +70,10 @@ public class MemberServiceImpl implements MemberService {
 		// tbl_reply 삭제
 		replyMapper.removebyUserid(vo);
 		
+		// 본인 게시물의 다른 사람 댓글 삭제
+		replyMapper.removeByBnoByUser(vo);
+		
+		
 		// tbl_board_file 삭제
 		fileMapper.removeByUserid(vo);
 		
