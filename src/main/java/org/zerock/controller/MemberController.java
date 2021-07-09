@@ -68,8 +68,8 @@ public class MemberController {
 	
 	@PostMapping("/modify")
 	@PreAuthorize("principal.username == #vo.userid")
-	public String modify(MemberVO vo, RedirectAttributes rttr, Authentication auth) {
-		boolean ok = service.modify(vo);
+	public String modify(MemberVO vo, RedirectAttributes rttr, Authentication auth, String oldPassword) {
+		boolean ok = service.modify(vo, oldPassword);
 		
 		if (ok) {
 			rttr.addAttribute("status", "success") ;
@@ -83,8 +83,8 @@ public class MemberController {
 	
 	@PostMapping("/remove")
 	@PreAuthorize("principal.username == #vo.userid")
-	public String remove(MemberVO vo, RedirectAttributes rttr, HttpServletRequest req) throws ServletException {
-		boolean ok = service.remove(vo);
+	public String remove(MemberVO vo, RedirectAttributes rttr, HttpServletRequest req, String oldPassword) throws ServletException {
+		boolean ok = service.remove(vo, oldPassword);
 		
 		if(ok) {
 			req.logout();

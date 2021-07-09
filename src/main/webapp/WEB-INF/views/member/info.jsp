@@ -12,13 +12,44 @@
 
 <script type="text/javascript">
 $(function() {
+	var oldPasswordModal = $("#old-password-modal");
+	var whichButton = "";
+	// 모달의 확인 버튼 클릭시 
+	$("#old-password-modal-btn").click(function() {
+		switch (whichButton) {
+			case "modify-button" :
+				$("#member-info-form1")
+				 .attr("action", "${appRoot}/member/modify")
+				 .submit();
+			break;
+			case "remove-button" :
+				$("#member-info-form1")
+				 .attr("action", "${appRoot}/member/remove")
+				 .submit();
+			break;
+		}
+	});
+	
+	// 수정 버튼 클릭시
+	$("#member-info-modify-btn1").click(function(e) {
+		e.preventDefault();
+		whichButton = "modify-button";
+		oldPasswordModal.modal('show');
+	});
+	
+	// 탈퇴 버튼 클릭시
 	$("#member-info-remove-btn1").click(function() {
 		var ans = confirm("탈퇴 하시겠습니까?");
+		whichButton = "remove-button";
 		
-		if(ans) {
+		if (ans) {
+			oldPasswordModal.modal('show');
+			
+			/*
 			$("#member-info-form1")
-			.attr("action", "${appRoot}/member/remove")
-			.submit();
+			 .attr("action", "${appRoot}/member/remove")
+			 .submit();
+			*/
 		}
 	});
 	
@@ -111,6 +142,36 @@ $(function() {
 				<button disabled type="submit" class="btn btn-secondary" id="member-info-modify-btn1">정보 수정</button>
 				<button type="button" class="btn btn-danger" id="member-info-remove-btn1">회원 탈퇴</button>
 			</form>
+		</div>
+	</div>
+</div>
+
+
+<%-- 기존 패스워드 입력 모달 --%>
+<div class="modal fade" id="old-password-modal">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">
+					기존 패스워드 입력
+				</h5>
+				<button type="button" class="close" data-dismiss="modal">
+					<span>&times;</span>
+				</button>
+			</div>		
+			
+			<div class="modal-body">
+				<div class="form-group">
+					<label for="old-password-input">기존 패스워드</label>
+					<input form="member-info-form1" name="oldPassword" type="password" class="form-control" id="old-password-input">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">
+					닫기
+				</button>
+				<button type="button" id="old-password-modal-btn" class="btn btn-danger">확인</button>
+			</div>
 		</div>
 	</div>
 </div>
